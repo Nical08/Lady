@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>💖 Per te</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: 'Comic Sans MS', Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.18);
+      padding: 30px;
+      border-radius: 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      max-width: 90%;
+      width: 360px;
+    }
+
+    h1 { font-size: 1.8rem; margin-bottom: 15px; }
+    p { font-size: 1.15rem; margin-bottom: 20px; }
+
+    img { width: 180px; margin: 15px auto; display: block; }
+
+    button {
+      font-size: 1.1rem;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 6px;
+    }
+
+    #yes { background: #4CAF50; color: white; }
+    #no { background: #f44336; color: white; }
+
+    .hidden { display: none !important; }
+
+    /* OVERLAY ERRORE */
+    .error-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #ff4d6d, #ff758c);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      z-index: 999;
+    }
+
+    .error-screen h1 { font-size: 3rem; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- SCHERMATA 1 -->
+    <div id="s1">
+      <h1>Amore…</h1>
+      <p>lo so che abbiamo litigato…<br>ma ci tengo davvero a te 💔</p>
+      <button onclick="go(2)">Continua</button>
+    </div>
+
+    <!-- SCHERMATA 2 -->
+    <div id="s2" class="hidden">
+      <h1>💬 Devo chiederti una cosa importante</h1>
+      <p>Promettimi che leggi fino alla fine 🥺</p>
+      <button onclick="go(3)">Continua</button>
+    </div>
+
+    <!-- SCHERMATA 3 -->
+    <div id="s3" class="hidden">
+      <img src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif" alt="orsetto" />
+      <p>Vuoi essere la mia compagna a San Valentino?</p>
+      <button id="yes">Sì 😍</button>
+      <button id="no">No 🙃</button>
+    </div>
+
+    <!-- FINALE -->
+    <div id="final" class="hidden">
+      <h1>😄🧸💖</h1>
+      <p>
+        Perfettooo!!<br><br>
+        Sei pronta alle <strong>21:30</strong> ⏰<br>
+        porta il <strong>costume</strong> 👙🔥
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ERRORE FULLSCREEN (SEMPE NASCOSTO ALL'AVVIO) -->
+  <div id="errorScreen" class="error-screen hidden">
+    <h1>⚠️ ERRORE</h1>
+    <p>Riprova 😌</p>
+    <button onclick="closeError()">Ok</button>
+  </div>
+
+  <script>
+    // FORZA NASCONDIMENTO ERRORE ALL'AVVIO (a prova di browser)
+    const errorScreen = document.getElementById('errorScreen');
+    errorScreen.classList.add('hidden');
+
+    let scale = 1;
+
+    function go(n) {
+      document.querySelectorAll('[id^="s"]').forEach(s => s.classList.add('hidden'));
+      document.getElementById('s' + n).classList.remove('hidden');
+    }
+
+    const yesBtn = document.getElementById('yes');
+    const noBtn = document.getElementById('no');
+
+    noBtn.addEventListener('click', () => {
+      errorScreen.classList.remove('hidden');
+      scale += 0.5;
+      yesBtn.style.transform = `scale(${scale})`;
+    });
+
+    function closeError() {
+      errorScreen.classList.add('hidden');
+      document.getElementById('s3').classList.remove('hidden');
+    }
+
+    yesBtn.addEventListener('click', () => {
+      document.getElementById('s3').classList.add('hidden');
+      document.getElementById('final').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
